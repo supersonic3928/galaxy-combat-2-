@@ -1,0 +1,33 @@
+{
+    "name": "GALAXY COMBAT 2  how long can u/you keep up without dying (don't worry you've got everything you need (hint: the healthbar))",
+    "description": "",
+    "dependencies": {
+        "device": "*",
+        "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.4.2"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md",
+        "assets.json",
+        "images.g.jres",
+        "images.g.ts",
+        "tilemap.g.jres",
+        "tilemap.g.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "branch": "v1.12.35",
+        "tag": "v1.12.35",
+        "commits": "https://github.com/microsoft/pxt-arcade/commits/f8f5efedd1040f22c4c3f512c3de683ef8cde8cd",
+        "target": "1.12.39",
+        "pxt": "8.5.48",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "blocksprj"
+}

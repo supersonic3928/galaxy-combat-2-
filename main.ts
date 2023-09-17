@@ -5,14 +5,18 @@ namespace SpriteKind {
     export const darkbeetlebomber = SpriteKind.create()
     export const enemy2 = SpriteKind.create()
     export const projectile2 = SpriteKind.create()
+    export const NUKE = SpriteKind.create()
+    export const allied_bomb = SpriteKind.create()
+    export const red_bill = SpriteKind.create()
 }
 namespace StatusBarKind {
     export const Ammo = StatusBarKind.create()
 }
 sprites.onOverlap(SpriteKind.life, SpriteKind.Player, function (sprite, otherSprite) {
     sprites.destroy(sprite)
-    info.changeLifeBy(1)
-    music.play(music.melodyPlayable(music.magicWand), music.PlaybackMode.UntilDone)
+    info.changeLifeBy(10)
+    info.changeScoreBy(-20)
+    music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.UntilDone)
 })
 sprites.onOverlap(SpriteKind.bomb, SpriteKind.enemy2, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.spray, 500)
@@ -41,10 +45,35 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     enemy_pew.setKind(SpriteKind.bomb)
     music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.UntilDone)
 })
+controller.player2.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
+    enemy_pew = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . 8 . . . . . . . . . . . . 8 . 
+        . 8 . . . . . . . . . . . . 8 . 
+        . 8 . . . . . . . . . . . . 8 . 
+        . 8 . 8 . . . . . . . . 8 . 8 . 
+        . . . 8 . . . . . . . . 8 . . . 
+        . . . 8 . . . . . . . . 8 . . . 
+        . . . 8 . . . . . . . . 8 . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, playership_2, 0, -200)
+    enemy_pew.setKind(SpriteKind.bomb)
+    music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.UntilDone)
+})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.rings, 500)
     info.changeLifeBy(-1)
     music.play(music.melodyPlayable(music.buzzer), music.PlaybackMode.UntilDone)
+})
+sprites.onOverlap(SpriteKind.NUKE, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
 })
 statusbars.onZero(StatusBarKind.Health, function (status) {
     sprites.destroy(Darkstar_Kingship, effects.fire, 10000)
@@ -68,6 +97,32 @@ sprites.onOverlap(SpriteKind.enemy2, SpriteKind.Player, function (sprite, otherS
     sprites.destroy(sprite, effects.rings, 500)
     info.changeLifeBy(-1)
     music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.UntilDone)
+})
+controller.player4.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
+    let playership_4: Sprite = null
+    enemy_pew = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . 7 . . . . . . . . . . . . 7 . 
+        . 7 . . . . . . . . . . . . 7 . 
+        . 7 . . . . . . . . . . . . 7 . 
+        . 7 . 7 . . . . . . . . 7 . 7 . 
+        . . . 7 . . . . . . . . 7 . . . 
+        . . . 7 . . . . . . . . 7 . . . 
+        . . . 7 . . . . . . . . 7 . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, playership_4, 0, -200)
+    enemy_pew.setKind(SpriteKind.bomb)
+    music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.UntilDone)
+})
+info.onLifeZero(function () {
+    game.gameOver(false)
 })
 info.onScore(500, function () {
     Darkstar_Kingship = sprites.create(img`
@@ -456,17 +511,53 @@ sprites.onOverlap(SpriteKind.projectile2, SpriteKind.Player, function (sprite, o
     info.changeLifeBy(-1)
     music.play(music.melodyPlayable(music.buzzer), music.PlaybackMode.UntilDone)
 })
+controller.player3.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
+    let playership_3: Sprite = null
+    enemy_pew = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . 5 . . . . . . . . . . . . 5 . 
+        . 5 . . . . . . . . . . . . 5 . 
+        . 5 . . . . . . . . . . . . 5 . 
+        . 5 . 5 . . . . . . . . 5 . 5 . 
+        . . . 5 . . . . . . . . 5 . . . 
+        . . . 5 . . . . . . . . 5 . . . 
+        . . . 5 . . . . . . . . 5 . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, playership_3, 0, -200)
+    enemy_pew.setKind(SpriteKind.bomb)
+    music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.UntilDone)
+})
+sprites.onOverlap(SpriteKind.NUKE, SpriteKind.Player, function (sprite, otherSprite) {
+    info.changeScoreBy(-10)
+    sprites.destroy(sprite)
+    music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.UntilDone)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy, effects.disintegrate, 500)
+    NUKE_INTO_MY_FATHER_hack_explosion_device.setKind(SpriteKind.bomb)
+})
 sprites.onOverlap(SpriteKind.bomb, SpriteKind.BOSS, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.spray, 500)
     music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.UntilDone)
     info.changeScoreBy(1)
     statusbar.value += -1
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite, effects.disintegrate, 500)
+    sprites.destroy(sprite, effects.rings, 500)
+    info.changeScoreBy(1)
+})
 sprites.onOverlap(SpriteKind.BOSS, SpriteKind.Player, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.rings, 500)
     info.changeLifeBy(-1)
     music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.UntilDone)
 })
+let HP: Sprite = null
 let dark_beetle_bomber: Sprite = null
 let xwing_dark_fighter: Sprite = null
 let flying_bombomb: Sprite = null
@@ -474,6 +565,7 @@ let bullet_bill: Sprite = null
 let PIGFO_RIDER: Sprite = null
 let projectile: Sprite = null
 let tie_fighter: Sprite = null
+let NUKE_INTO_MY_FATHER_hack_explosion_device: Sprite = null
 let projectile2: Sprite = null
 let tie_fighter_during_boss: Sprite = null
 let bullet_bill_2: Sprite = null
@@ -482,14 +574,37 @@ let banzai_bill: Sprite = null
 let statusbar: StatusBarSprite = null
 let Darkstar_Kingship: Sprite = null
 let enemy_pew: Sprite = null
+let playership_2: Sprite = null
 let SPACESHIP_SPACESHIP_SPACESHIP: Sprite = null
 effects.starField.startScreenEffect()
 game.splash("GALAXY COMBAT 2")
 game.splash("get 500 points to beat the boss")
-game.splash("oh yeah by the way")
+game.splash("player 2-4 have to help player 1 to get points to the boss")
 game.splash("good luck without dying")
 game.splash("  continue hit A to begin :)")
 SPACESHIP_SPACESHIP_SPACESHIP = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . 2 2 . . . . . . . 
+    . 5 . . . . 2 2 2 2 . . . . 5 . 
+    . 5 . . . . 2 2 2 2 . . . . 5 . 
+    . 2 . . . . d 1 1 d . . . . 2 . 
+    1 2 . 5 . . d 9 9 d . . 5 . 2 1 
+    8 1 . 5 . . 8 d d 8 . . 5 . 1 8 
+    8 8 1 2 . . 1 f f 1 . . 2 1 8 8 
+    8 8 8 2 . . 1 1 1 1 . . 2 8 8 8 
+    1 8 8 8 1 . 1 f f 1 . 1 8 8 8 1 
+    . 1 8 8 8 1 1 2 2 1 1 8 8 8 1 . 
+    . 4 1 8 8 8 1 2 2 1 8 8 8 1 4 . 
+    . 4 4 1 8 8 1 1 1 1 8 8 1 4 4 . 
+    . 4 4 4 1 1 5 2 2 5 1 1 4 4 4 . 
+    . 5 2 5 . 1 5 2 2 5 1 . 5 2 5 . 
+    . . 5 . . . . 5 5 . . . . 5 . . 
+    `, SpriteKind.Player)
+controller.moveSprite(SPACESHIP_SPACESHIP_SPACESHIP, 150, 150)
+SPACESHIP_SPACESHIP_SPACESHIP.setFlag(SpriteFlag.StayInScreen, true)
+info.setLife(500)
+info.setScore(0)
+playership_2 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . 2 2 . . . . . . . 
     . 5 . . . . 2 2 2 2 . . . . 5 . 
@@ -507,10 +622,11 @@ SPACESHIP_SPACESHIP_SPACESHIP = sprites.create(img`
     . 5 2 5 . 1 5 2 2 5 1 . 5 2 5 . 
     . . 5 . . . . 5 5 . . . . 5 . . 
     `, SpriteKind.Player)
-controller.moveSprite(SPACESHIP_SPACESHIP_SPACESHIP, 150, 150)
-SPACESHIP_SPACESHIP_SPACESHIP.setFlag(SpriteFlag.StayInScreen, true)
-info.setLife(175)
-info.setScore(0)
+playership_2.setFlag(SpriteFlag.StayInScreen, true)
+controller.player2.moveSprite(playership_2, 150, 150)
+playership_2.setKind(SpriteKind.Player)
+info.player2.setLife(175)
+info.player2.setScore(0)
 game.onUpdateInterval(5000, function () {
     tie_fighter = sprites.createProjectileFromSide(img`
         ...1............1...
@@ -1663,6 +1779,8 @@ game.onUpdateInterval(4000, function () {
 forever(function () {
     if (info.score() >= 500) {
         sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+        sprites.destroyAllSpritesOfKind(SpriteKind.life)
+        sprites.destroyAllSpritesOfKind(SpriteKind.NUKE)
     } else {
     	
     }
@@ -1707,6 +1825,33 @@ game.onUpdateInterval(3500, function () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, xwing_dark_fighter, 0, 200)
+})
+game.onUpdateInterval(30000, function () {
+    NUKE_INTO_MY_FATHER_hack_explosion_device = sprites.createProjectileFromSide(img`
+        .....................
+        .....................
+        .....................
+        .....................
+        .....................
+        .....fffff9fffff.....
+        .....fffff9fffff.....
+        .....fff22222fff.....
+        .....fff22222fff.....
+        .....ff9222229ff.....
+        .....99922222999.....
+        .....ff9222229ff.....
+        .....ff9fffff9ff.....
+        .....ff9222229ff.....
+        .....ff9999999ff.....
+        .....fffff9fffff.....
+        .....99999999999.....
+        .....fffff9fffff.....
+        .....fffff9fffff.....
+        .....99999999999.....
+        .....................
+        `, 0, 50)
+    NUKE_INTO_MY_FATHER_hack_explosion_device.x = randint(10, 150)
+    NUKE_INTO_MY_FATHER_hack_explosion_device.setKind(SpriteKind.NUKE)
 })
 game.onUpdateInterval(3000, function () {
     xwing_dark_fighter = sprites.createProjectileFromSide(img`
@@ -1832,6 +1977,30 @@ game.onUpdateInterval(3000, function () {
         . . . . . . 2 2 2 2 . . . . . . 
         . . . . . . 2 2 2 2 . . . . . . 
         `, dark_beetle_bomber, 0, 270)
+})
+game.onUpdateInterval(20000, function () {
+    HP = sprites.createProjectileFromSide(img`
+        2 . 2 . . . . . . . . . . 2 . 2 
+        2 5 2 . . . . . . . . . . 2 5 2 
+        9 9 9 . 6 6 6 6 6 6 6 6 . 9 9 9 
+        9 9 9 6 6 6 6 6 6 6 6 6 6 9 9 9 
+        6 6 6 6 6 6 9 6 6 9 6 6 6 6 6 6 
+        6 6 6 6 6 6 9 6 6 9 6 6 6 6 6 6 
+        9 9 9 6 6 6 6 6 6 6 6 6 6 9 9 9 
+        9 9 9 . 6 6 6 6 6 6 6 6 . 9 9 9 
+        . 9 . . 6 . . . . . . 6 . . 9 . 
+        . . . 6 6 . . . . . . 6 6 . . . 
+        . . . 6 1 1 1 1 1 1 1 1 6 . . . 
+        . . . 6 1 1 1 2 2 1 1 1 6 . . . 
+        . . . 6 1 1 2 2 2 2 1 1 6 . . . 
+        . . . 6 1 1 2 2 2 2 1 1 6 . . . 
+        . . . . 1 1 1 2 2 1 1 1 . . . . 
+        . . . . 1 1 1 1 1 1 1 1 . . . . 
+        . . . . . 1 . . . . 1 . . . . . 
+        . . . . . 1 1 1 1 1 1 . . . . . 
+        `, 0, 50)
+    HP.x = randint(10, 150)
+    HP.setKind(SpriteKind.life)
 })
 game.onUpdateInterval(4500, function () {
     xwing_dark_fighter = sprites.createProjectileFromSide(img`
